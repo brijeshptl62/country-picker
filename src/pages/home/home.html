@@ -11,4 +11,38 @@
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
   </p>
+
+
+  <span class="flag-icon flag-icon-gr"></span>
+  <span class="flag-icon flag-icon-in"></span>
+  <span class="flag-icon flag-icon-us"></span>
+
+
+  <!--<ion-item>-->
+    <!--<ion-select [(ngModel)]="country">-->
+      <!--<ion-option value="gr">GR</ion-option>-->
+      <!--<ion-option value="in">IN</ion-option>-->
+      <!--<ion-option value="us">US</ion-option>-->
+    <!--</ion-select>-->
+  <!--</ion-item>-->
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-label>Country</ion-label>
+          <ion-select [(ngModel)]="country">
+            <ion-option value="gr"><span class="flag-icon flag-icon-gr"></span>GR</ion-option>
+            <ion-option value="in"><span class="flag-icon flag-icon-in"></span>IN</ion-option>
+            <ion-option value="us"><span class="flag-icon flag-icon-us"></span>US</ion-option>
+          </ion-select>
+      </ion-col>
+      <ion-col col-8>
+          <input type="tel" id="phone" placeholder="Phone" />
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+  <button (click)="login()" type="button">Login</button>
 </ion-content>
