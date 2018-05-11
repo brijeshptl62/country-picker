@@ -8,8 +8,7 @@ page-home {
     position: relative;
   }
 
-  .flag-main-div
-  {
+  .flag-main-div {
     top: 30px;
     bottom: 30px;
     left: 30px;
@@ -19,8 +18,7 @@ page-home {
     z-index: 2;
   }
 
-  .country-list
-  {
+  .country-list {
     max-height: 100%;
     width: 100%;
     position: absolute;
@@ -37,13 +35,10 @@ page-home {
     overflow-y: scroll;
   }
 
-  .country
-  {
+  .country {
     padding: 10px 10px;
     line-height: 1.5em;
   }
-
-
 
   .flag-div {
     width: 19%;
@@ -80,26 +75,6 @@ page-home {
     border-top: 6px solid #555;
   }
 
-  .country-list-div {
-    position: absolute;
-    z-index: 2;
-    list-style: none;
-    text-align: left;
-    padding: 0;
-    margin: 0 0 0 -1px;
-    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    border: 1px solid #CCC;
-    white-space: nowrap;
-    max-height: 200px;
-    overflow-y: scroll;
-  }
-
-  .country-list-div li {
-    padding: 5px 10px;
-  }
-
   .country-span {
     padding: 0 5px;
   }
@@ -112,6 +87,13 @@ page-home {
 
   .dial-code {
     opacity: 0.5;
+  }
+
+  .error-div
+  {
+    font-weight: bold;
+    font-size: 1.5rem;
+    padding-top: 10px;
   }
 
 }

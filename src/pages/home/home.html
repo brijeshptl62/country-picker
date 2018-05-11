@@ -1,70 +1,77 @@
 <ion-content class="login-div" padding>
 
   <div  class="flag-main-div" *ngIf="isListOpen" >
-    <ul class="country-list" (click)="chooseCountry()">
-      <li class="country">
-        <span class="flag-icon flag-icon-gb"></span><span class="country-span">United Kingdom</span><span
-        class="dial-code">+44</span>
+    <ul class="country-list" >
+      <li class="country" *ngFor="let c of allCountries" (click)="chooseCountry(c)">
+        <span class="flag-icon {{c.flag}}"></span><span class="country-span">{{c.name}}</span><span
+        class="dial-code">{{c.dialCode}}</span>
       </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-in"></span><span class="country-span">India</span><span
-        class="dial-code">+91</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-us"></span><span class="country-span">United States</span><span
-        class="dial-code">+1</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-af"></span><span
-        class="country-span">Afghanistan (‫افغانستان‬‎)</span><span class="dial-code">+93</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-zm"></span><span class="country-span">Yemen (‫اليمن‬‎)</span><span
-        class="dial-code">+967</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-ax"></span><span class="country-span">Zimbabwe</span><span
-        class="dial-code">+263</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-zw"></span><span class="country-span">Zambia</span><span
-        class="dial-code">+260</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-pf"></span><span
-        class="country-span">French Polynesia (Polynésie française)</span><span
-        class="dial-code">
-          +689
-          </span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-ao"></span><span class="country-span">Angola</span><span
-        class="dial-code">+244</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-ar"></span><span class="country-span">Argentina</span><span
-        class="dial-code">+54</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-fi"></span><span class="country-span">Finland (Suomi)</span><span
-        class="dial-code">+358</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-ga"></span><span class="country-span">Gabon</span><span
-        class="dial-code">+241</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-hn"></span><span class="country-span">Honduras</span><span
-        class="dial-code">+504</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-ir"></span><span class="country-span">Iran (‫ایران‬‎)</span><span
-        class="dial-code">+98</span>
-      </li>
-      <li class="country">
-        <span class="flag-icon flag-icon-iq"></span><span class="country-span">Iraq (‫العراق‬‎)</span><span
-        class="dial-code">+964</span>
-      </li>
+
+
+
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-gb"></span><span class="country-span">United Kingdom</span><span-->
+        <!--class="dial-code">+44</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-in"></span><span class="country-span">India</span><span-->
+        <!--class="dial-code">+91</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-us"></span><span class="country-span">United States</span><span-->
+        <!--class="dial-code">+1</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-af"></span><span-->
+        <!--class="country-span">Afghanistan (‫افغانستان‬‎)</span><span class="dial-code">+93</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-zm"></span><span class="country-span">Yemen (‫اليمن‬‎)</span><span-->
+        <!--class="dial-code">+967</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-ax"></span><span class="country-span">Zimbabwe</span><span-->
+        <!--class="dial-code">+263</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-zw"></span><span class="country-span">Zambia</span><span-->
+        <!--class="dial-code">+260</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-pf"></span><span-->
+        <!--class="country-span">French Polynesia (Polynésie française)</span><span-->
+        <!--class="dial-code">-->
+          <!--+689-->
+          <!--</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-ao"></span><span class="country-span">Angola</span><span-->
+        <!--class="dial-code">+244</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-ar"></span><span class="country-span">Argentina</span><span-->
+        <!--class="dial-code">+54</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-fi"></span><span class="country-span">Finland (Suomi)</span><span-->
+        <!--class="dial-code">+358</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-ga"></span><span class="country-span">Gabon</span><span-->
+        <!--class="dial-code">+241</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-hn"></span><span class="country-span">Honduras</span><span-->
+        <!--class="dial-code">+504</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-ir"></span><span class="country-span">Iran (‫ایران‬‎)</span><span-->
+        <!--class="dial-code">+98</span>-->
+      <!--</li>-->
+      <!--<li class="country">-->
+        <!--<span class="flag-icon flag-icon-iq"></span><span class="country-span">Iraq (‫العراق‬‎)</span><span-->
+        <!--class="dial-code">+964</span>-->
+      <!--</li>-->
 
     </ul>
   </div>
@@ -86,7 +93,7 @@
 
         <!--selected flag-->
         <div class="active-flag padding-10">
-          <span class="flag-icon flag-icon-us"></span>
+          <span class="flag-icon {{activeFlag}}"></span>
           <div class="flag-arrow"></div>
         </div>
 
@@ -154,7 +161,22 @@
 
       </div>
       <!--phone input-->
-      <input class="phone-input" placeholder="Mobile Number" id="mobile" type="tel" autocomplete="off">
+      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="Mobile Number" minlength="10" maxlength="10" pattern="[1-9]{1}[0-9]*" type="tel" #phone="ngModel" autocomplete="off" required>
+
+
+      <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="text-red error-div">
+        <div [hidden]="!phone.errors.required">
+          Mobile number is required
+        </div>
+        <div [hidden]="!phone.errors.maxlength && !phone.errors.minlength">
+          Mobile number must consist 10 digits only
+        </div>
+        <div [hidden]="!phone.errors.pattern">
+          Please enter valid mobile number
+        </div>
+      </div>
+
+
       <button margin-top ion-button block outline class="btn-login" (click)="login()">Sign In</button>
       <h4 text-center margin-top padding-top class="text-white">Or register with your hotel</h4>
     </div>

@@ -13,6 +13,8 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import {OtpPage} from "../pages/otp/otp";
+import {HttpClientModule} from "@angular/common/http";
+import { CountryServiceProvider } from '../providers/country-service/country-service';
 
 
 const firebaseConfig = {
@@ -34,6 +36,7 @@ const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
@@ -50,7 +53,8 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     AngularFireDatabase,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    CountryServiceProvider
   ]
 })
 export class AppModule {}
