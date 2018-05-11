@@ -14,3 +14,29 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+
+.width60pt
+{
+  width: 60%;
+}
+
+.padding-top-20pt
+{
+  padding-top: 20%;
+}
+
+.full-width
+{
+  width:100%;
+}
+
+.padding-10
+{
+  padding: 10px;
+}
+
+.text-white
+{
+  color:white;
+}

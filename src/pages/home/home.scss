@@ -1,3 +1,117 @@
 page-home {
 
+  .login-div {
+    background: #006DCC;
+  }
+
+  .input-block {
+    position: relative;
+  }
+
+  .flag-main-div
+  {
+    top: 30px;
+    bottom: 30px;
+    left: 30px;
+    right: 30px;
+    position: fixed;
+    width: auto;
+    z-index: 2;
+  }
+
+  .country-list
+  {
+    max-height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0 0 0 -1px;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border: 1px solid #CCC;
+    white-space: normal;
+    overflow-y: scroll;
+  }
+
+  .country
+  {
+    padding: 10px 10px;
+    line-height: 1.5em;
+  }
+
+
+
+  .flag-div {
+    width: 19%;
+    height: 40px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    position: absolute;
+    background: white;
+  }
+
+  .phone-input {
+    margin-left: 20%;
+    width: 80%;
+    padding-left: 3%;
+    border-top-right-radius: 2px;
+    height: 40px;
+    border-bottom-right-radius: 2px;
+    border: none;
+  }
+
+  .active-flag {
+    height: inherit;
+  }
+
+  .flag-arrow {
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    left: 75%;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 6px solid #555;
+  }
+
+  .country-list-div {
+    position: absolute;
+    z-index: 2;
+    list-style: none;
+    text-align: left;
+    padding: 0;
+    margin: 0 0 0 -1px;
+    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    max-height: 200px;
+    overflow-y: scroll;
+  }
+
+  .country-list-div li {
+    padding: 5px 10px;
+  }
+
+  .country-span {
+    padding: 0 5px;
+  }
+
+  .btn-login {
+    color: white;
+    border-color: white;
+    background-color: #006DCC;
+  }
+
+  .dial-code {
+    opacity: 0.5;
+  }
+
 }
