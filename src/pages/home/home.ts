@@ -15,6 +15,7 @@ export class HomePage {
   activeFlag: string;
   activeCountry: Object;
   mobile: string;
+  selectedCountry: any = [];
 
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
 
@@ -28,12 +29,13 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+    document.getElementById("flagUl").style.display = "none";
     this.activeFlag = 'flag-icon-us';
     this.isListOpen = false;
+    var self: any = this;
     this.countryService.getAllCountry().then(
       (success) => {
-        this.allCountries = success;
-        console.log(this.allCountries);
+        self.allCountries = success;
         this.activeCountry = this.allCountries.filter((obj) => {
           return obj.flag === this.activeFlag;
         });
@@ -41,14 +43,31 @@ export class HomePage {
       (err) => {
         console.log(err);
       });
-
   }
 
   selectCountry() {
-    this.isListOpen = !this.isListOpen;
+    document.getElementById("flagUl").style.display = "block";
+    var self: any = this;
+    document.addEventListener ("keydown", function (zEvent) {
+
+      var selectedCountry: any = [];
+      for (var x in self.allCountries) {
+        if((((self.allCountries[x].name).substring(0,1)) == (zEvent.key).toUpperCase())) {
+          selectedCountry.push(self.allCountries[x].flag);
+          break
+        }
+      }
+      self.selectedCountry = selectedCountry;
+      if(self.selectedCountry.length > 0) {
+        var targetLi: any = document.getElementById(self.selectedCountry);
+        targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+      }
+    } );
+
   }
 
   chooseCountry(country) {
+    document.getElementById("flagUl").style.display = "none";
     this.activeCountry = country;
     this.isListOpen = !this.isListOpen;
     this.activeFlag = country.flag;

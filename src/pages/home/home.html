@@ -1,8 +1,8 @@
 <ion-content class="login-div" padding>
 
-  <div class="flag-main-div" *ngIf="isListOpen">
+  <div class="flag-main-div" id="flagUl" >
     <ul class="country-list">
-      <li class="country" *ngFor="let c of allCountries" (click)="chooseCountry(c)">
+      <li class="country" *ngFor="let c of allCountries" id="{{c.flag}}" (click)="chooseCountry(c)">
         <span class="flag-icon {{c.flag}}"></span><span class="country-span">{{c.name}}</span><span
         class="dial-code">{{c.dialCode}}</span>
       </li>
