@@ -1,6 +1,6 @@
 <ion-content class="login-div" padding>
 
-  <div class="flag-main-div" id="flagUl" >
+  <div class="flag-main-div" id="flagUl">
     <ul class="country-list">
       <li class="country" *ngFor="let c of allCountries" id="{{c.flag}}" (click)="chooseCountry(c)">
         <span class="flag-icon {{c.flag}}"></span><span class="country-span">{{c.name}}</span><span
@@ -32,8 +32,8 @@
 
       </div>
       <!--phone input-->
-      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="Mobile Number" minlength="10"
-             maxlength="10" pattern="[1-9]{1}[0-9]*" type="tel" #phone="ngModel" autocomplete="off" required>
+      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="Mobile Number" type="tel"
+             #phone="ngModel" autocomplete="off" (blur)="validationCheckFn()" required>
 
       <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="text-dark-orange error-div">
         <div [hidden]="!phone.errors.required">
@@ -46,6 +46,10 @@
           Please enter valid mobile number
         </div>
       </div>
+      <p class="error-div margin-0" align="right">
+        <span id="valid-msg" *ngIf="isValid" >✓ Valid number</span>
+        <span id="error-msg" *ngIf="isInvalid" >* Invalid number</span>
+      </p>
 
       <!--disable button till data is not valid-->
       <button margin-top ion-button block outline class="btn-login" (click)="login()">Sign In</button>

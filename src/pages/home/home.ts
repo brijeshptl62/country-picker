@@ -11,14 +11,15 @@ import {CountryServiceProvider} from "../../providers/country-service/country-se
 export class HomePage {
   logoImage: string = "../../assets/imgs/home.png";
   isListOpen: boolean;
+  isValid: boolean;
+  isInvalid: boolean;
   allCountries: any;
   activeFlag: string;
-  activeCountry: Object;
+  activeCountry: any;
   mobile: string;
   selectedCountry: any = [];
 
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
-
   }
 
   login() {
@@ -32,13 +33,18 @@ export class HomePage {
     document.getElementById("flagUl").style.display = "none";
     this.activeFlag = 'flag-icon-us';
     this.isListOpen = false;
+    this.isValid = false;
+    this.isInvalid = false;
+
     var self: any = this;
     this.countryService.getAllCountry().then(
       (success) => {
         self.allCountries = success;
-        this.activeCountry = this.allCountries.filter((obj) => {
+        var activeCountryArray: any;
+        activeCountryArray = this.allCountries.filter((obj) => {
           return obj.flag === this.activeFlag;
         });
+        this.activeCountry = activeCountryArray[0];
       }).catch(
       (err) => {
         console.log(err);
@@ -47,6 +53,10 @@ export class HomePage {
 
   selectCountry() {
     document.getElementById("flagUl").style.display = "block";
+    this.isValid = false;
+    this.isInvalid = false;
+    this.mobile = null;
+
     var self: any = this;
     document.addEventListener ("keydown", function (zEvent) {
 
@@ -64,6 +74,21 @@ export class HomePage {
       }
     } );
 
+  }
+
+  validationCheckFn() {
+    if(this.mobile) {
+      const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+      const number = phoneUtil.parseAndKeepRawInput(this.mobile, this.activeCountry.countryCode);
+
+      if (phoneUtil.isValidNumber(number)) {
+        this.isValid = true;
+        this.isInvalid = false;
+      } else {
+        this.isValid = false;
+        this.isInvalid = true;
+      }
+    }
   }
 
   chooseCountry(country) {
