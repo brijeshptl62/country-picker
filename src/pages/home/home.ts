@@ -77,7 +77,7 @@ export class HomePage {
   }
 
   validationCheckFn() {
-    if(this.mobile) {
+    if(this.mobile && (/^\d+$/.test(this.mobile))) {
       const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
       const number = phoneUtil.parseAndKeepRawInput(this.mobile, this.activeCountry.countryCode);
 
