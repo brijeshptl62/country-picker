@@ -31,7 +31,18 @@ export class HomePage {
 
   ionViewDidLoad() {
     document.getElementById("flagUl").style.display = "none";
-    this.activeFlag = 'flag-icon-us';
+
+    this.http.get("https://api.ipdata.co").subscribe(data => {
+      var countryCode: any = (data.country_code).toLowerCase();
+      this.activeFlag = 'flag-icon-'+countryCode;
+    }, error => {
+      console.log(JSON.stringify(error.json()));
+      this.activeFlag = 'flag-icon-us';
+    });
+
+    if(!this.activeFlag) {
+      this.activeFlag = 'flag-icon-us';
+    }
     this.isListOpen = false;
     this.isValid = false;
     this.isInvalid = false;
