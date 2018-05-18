@@ -18,6 +18,7 @@ export class HomePage {
   activeCountry: any;
   mobile: string;
   selectedCountry: any = [];
+  numberPlaceholder: any;
 
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
   }
@@ -33,22 +34,6 @@ export class HomePage {
     document.getElementById("flagUl").style.display = "none";
 
     var self: any = this;
-    if(!this.activeFlag) {
-      this.activeFlag = 'flag-icon-us';
-    }
-    this.countryService.getAllCountry().then(
-      (success) => {
-        self.allCountries = success;
-        var activeCountryArray: any;
-        activeCountryArray = this.allCountries.filter((obj) => {
-          return obj.flag === this.activeFlag;
-        });
-        this.activeCountry = activeCountryArray[0];
-        console.log(this.activeCountry)
-      }).catch(
-      (err) => {
-        console.log(err);
-      });
 
     this.http.get("https://api.ipdata.co").subscribe(data => {
       var countryCode: any = (data.country_code).toLowerCase();
@@ -58,26 +43,33 @@ export class HomePage {
         return obj.flag === this.activeFlag;
       });
       this.activeCountry = activeCountryArray[0];
+      console.log(this.activeCountry )
     }, error => {
       console.log(JSON.stringify(error.json()));
       self.activeFlag = 'flag-icon-us';
     });
 
+    if(!this.activeFlag) {
+      this.activeFlag = 'flag-icon-us';
+    }
+    this.countryService.getAllCountry().then(
+      (success) => {
+        self.allCountries = success;
+        var activeCountryArray: any;
+        if(!this.activeFlag) {
+          activeCountryArray = this.allCountries.filter((obj) => {
+            return obj.flag === this.activeFlag;
+          });
+          this.activeCountry = activeCountryArray[0];
+        }
+      }).catch(
+      (err) => {
+        console.log(err);
+      });
+
     this.isListOpen = false;
     this.isValid = false;
     this.isInvalid = false;
-
-    var hidden = document.getElementById('flagUl');
-      var count: any = 0;
-      document.addEventListener('click', function (e) {
-        if(hidden.style.display == "block") {
-            if(count > 1) {
-              console.log(e.target.getAttribute('flagUl'))
-              if (e.target.id == 'toggle' || (hidden.style.display != 'none' && !hidden.contains(e.target))) hidden.style.display = hidden.style.display == 'none' ? 'block' : 'none';
-              count++;
-            }
-        }
-      }, false);
 
   }
 
