@@ -2004,21 +2004,6 @@ export class CountryServiceProvider {
         }
       });
       resolve(result);
-
-
-      // this.http.get('../../assets/countries.json').subscribe(data => {
-      //   let result = data.map(function (obj) {
-      //     return {
-      //       name: obj.name,
-      //       countryCode: obj.countryCode,
-      //       dialCode: "+" + obj.callingCodes[0],
-      //       flag: "flag-icon-" + obj.countryCode.toLowerCase()
-      //     }
-      //   });
-      //   resolve(result);
-      // }, err => {
-      //   console.log(err);
-      // });
     });
   }
 

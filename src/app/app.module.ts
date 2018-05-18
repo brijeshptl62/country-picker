@@ -6,13 +6,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { PhoneVerificationPage } from '../pages/phone-verification/phone-verification';
 
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import {OtpPage} from "../pages/otp/otp";
 import {HttpClientModule} from "@angular/common/http";
 import { CountryServiceProvider } from '../providers/country-service/country-service';
 
@@ -30,9 +28,7 @@ const firebaseConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    PhoneVerificationPage,
-    OtpPage
+    HomePage
   ],
   imports: [
     BrowserModule,
@@ -45,9 +41,7 @@ const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    PhoneVerificationPage,
-    OtpPage
+    HomePage
   ],
   providers: [
     StatusBar,
