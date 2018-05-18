@@ -10,7 +10,6 @@ import {CountryServiceProvider} from "../../providers/country-service/country-se
 })
 export class HomePage {
   logoImage: string = "../../assets/imgs/home.png";
-  isListOpen: boolean;
   isValid: boolean;
   isInvalid: boolean;
   allCountries: any;
@@ -76,7 +75,6 @@ export class HomePage {
         console.log(err);
       });
 
-    this.isListOpen = false;
     this.isValid = false;
     this.isInvalid = false;
 
@@ -110,6 +108,23 @@ export class HomePage {
       }
     });
 
+    document.addEventListener("click", function (e) {
+      var level = 0;
+      for (var element = e.target; element; element = element.parentNode) {
+        if (element.id === 'flagUl') {
+          return;
+        }else {
+          if((element.id) == "mainDivId"){
+            document.getElementById("flagUl").style.display = "block";
+            return;
+          }else {
+            document.getElementById("flagUl").style.display = "none";
+          }
+        }
+        level++;
+      }
+    });
+
   }
 
   validationCheckFn() {
@@ -135,7 +150,6 @@ export class HomePage {
     } else {
       this.numberPlaceholder = "Mobile Number";
     }
-    this.isListOpen = !this.isListOpen;
     this.activeFlag = country.flag;
   }
 
