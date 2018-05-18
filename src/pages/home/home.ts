@@ -88,6 +88,11 @@ export class HomePage {
     this.isInvalid = false;
     this.mobile = null;
 
+    if(this.activeFlag) {
+      var targetLi: any = document.getElementById(this.activeFlag);
+      targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+    }
+
     var self: any = this;
     document.addEventListener("keydown", function (zEvent) {
 
