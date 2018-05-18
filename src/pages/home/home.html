@@ -32,7 +32,7 @@
 
       </div>
       <!--phone input-->
-      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="Mobile Number" type="tel" pattern="[1-9]{1}[0-9]*"
+      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="{{numberPlaceholder}}" type="tel" pattern="[1-9]{1}[0-9]*"
              #phone="ngModel" autocomplete="off" (blur)="validationCheckFn()" required>
 
       <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="text-dark-orange error-div">
