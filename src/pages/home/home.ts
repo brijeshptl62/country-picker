@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {NavController} from 'ionic-angular';
-import {PhoneVerificationPage} from "../phone-verification/phone-verification";
 import {HttpClient} from "@angular/common/http";
 import {CountryServiceProvider} from "../../providers/country-service/country-service";
 
@@ -35,17 +34,21 @@ export class HomePage {
     var self: any = this;
 
     this.http.get("https://api.ipdata.co").subscribe(data => {
-      var countryCode: any = (data.country_code).toLowerCase();
-      self.activeFlag = 'flag-icon-' + countryCode;
-      var activeCountryArray: any;
-      activeCountryArray = this.allCountries.filter((obj) => {
-        return obj.flag === this.activeFlag;
-      });
-      this.activeCountry = activeCountryArray[0];
-      if (this.activeCountry.numberExample) {
-        this.numberPlaceholder = this.activeCountry.numberExample;
-      } else {
-        this.numberPlaceholder = "Mobile Number";
+      console.log(data)
+      if (data) {
+        var countryResponce: any = data;
+        var countryCode: any = (countryResponce.country_code).toLowerCase();
+        self.activeFlag = 'flag-icon-' + countryCode;
+        var activeCountryArray: any;
+        activeCountryArray = this.allCountries.filter((obj) => {
+          return obj.flag === this.activeFlag;
+        });
+        this.activeCountry = activeCountryArray[0];
+        if (this.activeCountry.numberExample) {
+          this.numberPlaceholder = this.activeCountry.numberExample;
+        } else {
+          this.numberPlaceholder = "Mobile Number";
+        }
       }
     }, error => {
       console.log(JSON.stringify(error.json()));
@@ -86,7 +89,7 @@ export class HomePage {
     this.isInvalid = false;
     this.mobile = null;
 
-    if(this.activeFlag) {
+    if (this.activeFlag) {
       var targetLi: any = document.getElementById(this.activeFlag);
       targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
     }
@@ -110,14 +113,14 @@ export class HomePage {
 
     document.addEventListener("click", function (e) {
       var level = 0;
-      for (var element = e.target; element; element = element.parentNode) {
+      for (var element: any = e.target; element; element = element.parentNode) {
         if (element.id === 'flagUl') {
           return;
-        }else {
-          if((element.id) == "mainDivId"){
+        } else {
+          if ((element.id) == "mainDivId") {
             document.getElementById("flagUl").style.display = "block";
             return;
-          }else {
+          } else {
             document.getElementById("flagUl").style.display = "none";
           }
         }
