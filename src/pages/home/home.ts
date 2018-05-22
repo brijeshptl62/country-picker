@@ -21,27 +21,19 @@ export class HomePage {
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
   }
 
-  login() {
-    console.log(this.activeCountry);
-    console.log(this.mobile);
-    console.log(this.activeFlag);
-    // this.navCtrl.push(PhoneVerificationPage);
-  }
-
   ionViewDidLoad() {
     document.getElementById("flagUl").style.display = "none";
 
     var self: any = this;
 
     this.http.get("https://api.ipdata.co").subscribe(data => {
-      console.log(data)
       if (data) {
         var countryResponce: any = data;
-        var countryCode: any = (countryResponce.country_code).toLowerCase();
-        self.activeFlag = 'flag-icon-' + countryCode;
+        var countryCodes: any = (countryResponce.country_code).toLowerCase();
+        self.activeFlag = "http://www.geonames.org/flags/x/"+ countryCodes +".gif";
         var activeCountryArray: any;
         activeCountryArray = this.allCountries.filter((obj) => {
-          return obj.flag === this.activeFlag;
+          return obj.countryCode == countryCodes.toUpperCase();
         });
         this.activeCountry = activeCountryArray[0];
         if (this.activeCountry.numberExample) {
@@ -51,28 +43,16 @@ export class HomePage {
         }
       }
     }, error => {
-      console.log(JSON.stringify(error.json()));
-      self.activeFlag = 'flag-icon-us';
+      console.log(JSON.stringify(error));
+      self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
     });
 
     if (!this.activeFlag) {
-      this.activeFlag = 'flag-icon-us';
+      this.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
     }
     this.countryService.getAllCountry().then(
       (success) => {
         self.allCountries = success;
-        var activeCountryArray: any;
-        if (!this.activeFlag) {
-          activeCountryArray = this.allCountries.filter((obj) => {
-            return obj.flag === this.activeFlag;
-          });
-          this.activeCountry = activeCountryArray[0];
-          if (this.activeCountry.numberExample) {
-            this.numberPlaceholder = this.activeCountry.numberExample;
-          } else {
-            this.numberPlaceholder = "Mobile Number";
-          }
-        }
       }).catch(
       (err) => {
         console.log(err);
@@ -90,7 +70,7 @@ export class HomePage {
     this.mobile = null;
 
     if (this.activeFlag) {
-      var targetLi: any = document.getElementById(this.activeFlag);
+      var targetLi: any = document.getElementById(this.activeCountry.flag);
       targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
     }
 
@@ -111,29 +91,12 @@ export class HomePage {
       }
     });
 
-    document.addEventListener("click", function (e) {
-      var level = 0;
-      for (var element: any = e.target; element; element = element.parentNode) {
-        if (element.id === 'flagUl') {
-          return;
-        } else {
-          if ((element.id) == "mainDivId") {
-            document.getElementById("flagUl").style.display = "block";
-            return;
-          } else {
-            document.getElementById("flagUl").style.display = "none";
-          }
-        }
-        level++;
-      }
-    });
-
   }
 
-  validationCheckFn() {
-    if (this.mobile && (/^\d+$/.test(this.mobile))) {
+  validationCheckFn(mobile: any) {
+    if (mobile && (/^\d+$/.test(mobile))) {
       const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-      const number = phoneUtil.parseAndKeepRawInput(this.mobile, this.activeCountry.countryCode);
+      const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
 
       if (phoneUtil.isValidNumber(number)) {
         this.isValid = true;
@@ -142,6 +105,9 @@ export class HomePage {
         this.isValid = false;
         this.isInvalid = true;
       }
+    } else {
+      this.isValid = false;
+      this.isInvalid = false;
     }
   }
 
@@ -153,7 +119,7 @@ export class HomePage {
     } else {
       this.numberPlaceholder = "Mobile Number";
     }
-    this.activeFlag = country.flag;
+    this.activeFlag = country.flagImg;
   }
 
 

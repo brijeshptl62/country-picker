@@ -1,22 +1,15 @@
-<ion-content class="login-div" padding>
+<ion-content padding>
 
   <div class="flag-main-div" id="flagUl">
     <ul class="country-list">
       <li class="country" *ngFor="let c of allCountries" id="{{c.flag}}" (click)="chooseCountry(c)">
-        <span class="flag-icon {{c.flag}}"></span><span class="country-span">{{c.name}}</span><span
+        <img [src]="c.flagImg" class="flag-scroll-img"><span class="country-span">{{c.name}}</span><span
         class="dial-code">{{c.dialCode}}</span>
       </li>
     </ul>
   </div>
 
-  <div class="padding-top-20pt">
-    <div text-center >
-      <img [src]="logoImage" class="width60pt">
-    </div>
-    <div padding-top text-center>
-      <h1 class="text-white">The Future of Hospitalty</h1>
-    </div>
-
+  <div >
     <!--main div-->
     <div class="full-width input-block" padding id="mainDivId">
 
@@ -24,35 +17,22 @@
       <div class="flag-div" (click)="selectCountry()">
 
         <!--selected flag-->
-        <div class="active-flag padding-10">
-          <span class="flag-icon {{activeFlag}}"></span>
+        <div class="active-flag padding-9">
+          <img [src]="activeFlag" class="flag-scroll-img">
+          <!--<span class="flag-icon {{activeFlag}}"></span>-->
           <div class="flag-arrow"></div>
         </div>
 
       </div>
       <!--phone input-->
       <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="{{numberPlaceholder}}" type="tel" pattern="[1-9]{1}[0-9]*"
-             #phone="ngModel" autocomplete="off" (blur)="validationCheckFn()" required>
+             #phone="ngModel" autocomplete="off" (blur)="validationCheckFn(mobile)" required>
 
-      <div *ngIf="phone.errors && (phone.dirty || phone.touched)" class="text-dark-orange error-div">
-        <div [hidden]="!phone.errors.required">
-          Mobile number is required
-        </div>
-        <div [hidden]="!phone.errors.maxlength && !phone.errors.minlength">
-          Mobile number must consist 10 digits only
-        </div>
-        <div [hidden]="!phone.errors.pattern">
-          Please enter valid mobile number
-        </div>
-      </div>
       <p class="error-div margin-0" align="right">
         <span id="valid-msg" *ngIf="isValid" >✓ Valid number</span>
         <span id="error-msg" *ngIf="isInvalid" >* Invalid number</span>
       </p>
 
-      <!--disable button till data is not valid-->
-      <button margin-top ion-button block outline class="btn-login" (click)="login()">Sign In</button>
-      <h4 text-center margin-top padding-top class="text-white">Or register with your hotel</h4>
     </div>
 
   </div>

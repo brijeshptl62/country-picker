@@ -2000,7 +2000,9 @@ export class CountryServiceProvider {
           countryCode: obj.countryCode,
           dialCode: "+" + obj.callingCodes[0],
           flag: "flag-icon-" + obj.countryCode.toLowerCase(),
-          numberExample: obj.numberExample
+          numberExample: obj.numberExample,
+          flagImg: "http://www.geonames.org/flags/x/"+ obj.countryCode.toLowerCase() +".gif",
+
         }
       });
       resolve(result);
