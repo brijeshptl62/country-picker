@@ -1,14 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 
-/*
- Generated class for the CountryServiceProvider provider.
-
- See https://angular.io/guide/dependency-injection for more info on providers
- and Angular DI.
- */
-
-
 @Injectable()
 export class CountryServiceProvider {
 
@@ -57,14 +49,6 @@ export class CountryServiceProvider {
           "1684"
         ],
         "numberExample": "(684) 733-1234"
-      },
-      {
-        "name": "Andorra",
-        "countryCode": "AD",
-        "callingCodes": [
-          "376"
-        ],
-        "numberExample": "312 345"
       },
       {
         "name": "Angola",
@@ -2007,6 +1991,34 @@ export class CountryServiceProvider {
       });
       resolve(result);
     });
+  }
+
+  getUserCountry() {
+    return this.http.get("https://api.ipdata.co").toPromise().then(data => {
+
+      var countryResponce: any = data;
+      var countryCodes: any = (countryResponce.country_code).toLowerCase();
+      var activeFlag = "http://www.geonames.org/flags/x/" + countryCodes + ".gif";
+
+      var activeCountryArray: any;
+      activeCountryArray = this.allCountries.filter((obj) => {
+        return obj.countryCode == countryCodes.toUpperCase();
+      });
+      var activeCountry = activeCountryArray[0];
+      var numberPlaceholder;
+      if (activeCountry.numberExample) {
+        numberPlaceholder = activeCountry.numberExample;
+      } else {
+        numberPlaceholder = "Mobile Number";
+      }
+
+      let userCountry = {activeFlag: activeFlag, activeCountryArray: activeCountryArray, numberPlaceholder: numberPlaceholder};
+      return userCountry
+    }).catch(
+      (err) => {
+        return err;
+      }
+    );
   }
 
 }

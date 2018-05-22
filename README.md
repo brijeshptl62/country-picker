@@ -32,6 +32,8 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import {HttpClientModule} from "@angular/common/http";
+
 
 // Import your module
 import { CountryServiceProvider ,SelectCountryComponent } from 'country-picker';
@@ -44,7 +46,7 @@ import { CountryServiceProvider ,SelectCountryComponent } from 'country-picker';
   ],
   imports: [
     IonicModule.forRoot(MyApp),
-
+    HttpClientModule
     MyModule // Put your module here
   ],
   bootstrap: [IonicApp],

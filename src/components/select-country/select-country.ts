@@ -1,4 +1,4 @@
-import { Component , Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {HttpClient} from "@angular/common/http";
 import {CountryServiceProvider} from "../../providers/country-service/country-service";
@@ -162,8 +162,6 @@ export class SelectCountryComponent {
 
   @Output() sendNumber = new EventEmitter();
   @Output() sendCountry = new EventEmitter();
-  // isValid: boolean;
-  // isInvalid: boolean;
   isListOpen: boolean;
   allCountries: any;
   activeFlag: string;
@@ -177,31 +175,22 @@ export class SelectCountryComponent {
     this.isListOpen = false;
     var self: any = this;
 
-    this.http.get("https://api.ipdata.co").subscribe(data => {
-      if (data) {
-        var countryResponce: any = data;
-        var countryCodes: any = (countryResponce.country_code).toLowerCase();
-        self.activeFlag = "http://www.geonames.org/flags/x/"+ countryCodes +".gif";
-        var activeCountryArray: any;
-        activeCountryArray = this.allCountries.filter((obj) => {
-          return obj.countryCode == countryCodes.toUpperCase();
+    this.countryService.getUserCountry().then(
+      (success) => {
+        self.activeFlag = success.activeFlag;
+        this.activeCountry = success.activeCountry;
+        this.numberPlaceholder = success.numberPlaceholder;
+      })
+      .catch(
+        (err) => {
+          console.log(err);
+          self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
         });
-        this.activeCountry = activeCountryArray[0];
-        this.sendCountry.emit(this.activeCountry);
-        if (this.activeCountry.numberExample) {
-          this.numberPlaceholder = this.activeCountry.numberExample;
-        } else {
-          this.numberPlaceholder = "Mobile Number";
-        }
-      }
-    }, error => {
-      console.log(JSON.stringify(error));
-      self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-    });
 
     if (!this.activeFlag) {
       this.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
     }
+
     this.countryService.getAllCountry().then(
       (success) => {
         self.allCountries = success;
@@ -240,7 +229,7 @@ export class SelectCountryComponent {
 
   }
 
-  scrollTo(elementId:string) {
+  scrollTo(elementId: string) {
     var targetLi: any = document.getElementById(elementId);
     targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
     targetLi.style.backgroundColor = "#eeee";
@@ -253,21 +242,20 @@ export class SelectCountryComponent {
       const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
 
       if (phoneUtil.isValidNumber(number)) {
-        let mobileObj = {mobile:mobile, isValid:"valid"};
+        let mobileObj = {mobile: mobile, isValid: "valid"};
         this.sendNumber.emit(mobileObj)
       } else {
-        let mobileObj = {mobile:mobile, isValid:"invalid"};
+        let mobileObj = {mobile: mobile, isValid: "invalid"};
         this.sendNumber.emit(mobileObj)
       }
     } else {
-      let mobileObj = {mobile:mobile, isValid:"invalid"};
+      let mobileObj = {mobile: mobile, isValid: "invalid"};
       this.sendNumber.emit(mobileObj)
     }
   }
 
   chooseCountry(country) {
     this.sendCountry.emit(country);
-    // document.getElementById("flagUl").style.display = "none";
     this.isListOpen = false;
     this.activeCountry = country;
     if (this.activeCountry.numberExample) {
