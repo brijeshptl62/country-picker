@@ -9,13 +9,15 @@ import { HomePage } from '../pages/home/home';
 
 import {HttpClientModule} from "@angular/common/http";
 import { CountryServiceProvider } from '../providers/country-service/country-service';
+import {SelectCountryComponent} from "../components/select-country/select-country";
 
 
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SelectCountryComponent
   ],
   imports: [
     BrowserModule,

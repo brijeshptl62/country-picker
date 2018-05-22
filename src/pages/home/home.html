@@ -1,39 +1,4 @@
 <ion-content padding>
-
-  <div class="flag-main-div" id="flagUl">
-    <ul class="country-list">
-      <li class="country" *ngFor="let c of allCountries" id="{{c.flag}}" (click)="chooseCountry(c)">
-        <img [src]="c.flagImg" class="flag-scroll-img"><span class="country-span">{{c.name}}</span><span
-        class="dial-code">{{c.dialCode}}</span>
-      </li>
-    </ul>
-  </div>
-
-  <div >
-    <!--main div-->
-    <div class="full-width input-block" padding id="mainDivId">
-
-      <!--flag container-->
-      <div class="flag-div" (click)="selectCountry()">
-
-        <!--selected flag-->
-        <div class="active-flag padding-9">
-          <img [src]="activeFlag" class="flag-scroll-img">
-          <!--<span class="flag-icon {{activeFlag}}"></span>-->
-          <div class="flag-arrow"></div>
-        </div>
-
-      </div>
-      <!--phone input-->
-      <input class="phone-input" name="phone" [(ngModel)]="mobile" placeholder="{{numberPlaceholder}}" type="tel" pattern="[1-9]{1}[0-9]*"
-             #phone="ngModel" autocomplete="off" (blur)="validationCheckFn(mobile)" required>
-
-      <p class="error-div margin-0" align="right">
-        <span id="valid-msg" *ngIf="isValid" >✓ Valid number</span>
-        <span id="error-msg" *ngIf="isInvalid" >* Invalid number</span>
-      </p>
-
-    </div>
-
-  </div>
+  <select-country (sendNumber)="getNumber($event)" (sendCountry)="getCountry($event)"></select-country>
 </ion-content>
+
