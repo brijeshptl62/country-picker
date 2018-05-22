@@ -8,6 +8,8 @@ import {HttpClient} from "@angular/common/http";
 })
 export class HomePage {
 
+  mobile: any;
+  
   constructor(public navCtrl: NavController, public http: HttpClient) {
 
   }
