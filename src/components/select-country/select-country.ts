@@ -161,6 +161,7 @@ const HTML_TEMPLATE = `
 export class SelectCountryComponent {
 
   @Input('isPlaceholder') isPlaceholder;
+  @Input('isGeoIpLookup') isGeoIpLookup;
 
   @Output() onSelectNumber = new EventEmitter();
   @Output() onSelectCountry = new EventEmitter();
@@ -181,28 +182,6 @@ export class SelectCountryComponent {
 
     var self: any = this;
 
-    this.countryService.getUserCountry().then(
-      (success) => {
-        self.activeFlag = success.activeFlag;
-        this.activeCountry = success.activeCountry;
-
-        if ((success.numberPlaceholder) && this.isPlaceholder != false) {
-          this.numberPlaceholder = success.numberPlaceholder;
-        } else {
-          this.numberPlaceholder = "Mobile Number";
-        }
-
-      })
-      .catch(
-        (err) => {
-          console.log(err);
-          self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-        });
-
-    if (!this.activeFlag) {
-      this.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-    }
-
     this.countryService.getAllCountry().then(
       (success) => {
         self.allCountries = success;
@@ -210,6 +189,42 @@ export class SelectCountryComponent {
       (err) => {
         console.log(err);
       });
+
+    if (this.isGeoIpLookup != false) {
+      this.countryService.getUserCountry().then(
+        (success) => {
+          self.activeFlag = success.activeFlag;
+          this.activeCountry = success.activeCountry;
+
+          if ((success.numberPlaceholder) && this.isPlaceholder != false) {
+            this.numberPlaceholder = success.numberPlaceholder;
+          } else {
+            this.numberPlaceholder = "Mobile Number";
+          }
+
+        }).catch(
+          (err) => {
+            console.log(err);
+            self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
+          });
+    }
+
+    if (!this.activeFlag) {
+      this.countryService.getDefaultCountry().then(
+        (success) => {
+          this.activeFlag = success.activeFlag;
+          this.activeCountry = success.activeCountry;
+          if ((this.activeCountry.numberExample) && this.isPlaceholder != false) {
+            this.numberPlaceholder = this.activeCountry.numberExample;
+          } else {
+            this.numberPlaceholder = "Mobile Number";
+          }
+        }).catch(
+        (err) => {
+          console.log(err);
+          this.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
+        });
+    }
   }
 
   selectCountry() {

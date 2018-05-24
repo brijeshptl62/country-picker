@@ -73,11 +73,11 @@ import {HttpClientModule} from "@angular/common/http";
 **home.html**
 
 ```
-
   <select-country (sendNumber)="getNumber($event)" (sendCountry)="getCountry($event)"></select-country>
 
 ```
 
+## Public Methods
 
 
 **get Selected Country**
@@ -112,15 +112,24 @@ import {HttpClientModule} from "@angular/common/http";
   }
 ```
 
-**Hide Placeholder Number Examples**
 
-To hide the country example number as placeholder pass the value 'false' as [isPlaceholder]="false".
+## Options
+
+**Hide Placeholder Number**
+Type: ```Boolean``` Default: ```true```
+To hide the country example number as placeholder pass the Boolean value 'false' as [isPlaceholder]="false".
 
 ```
 <select-country [isPlaceholder]="false"></select-country>
 ```
 
+**Hide user's country**
+Type: ```Boolean``` Default: ```true```
+this plugin is use IP address for lookup to set the default country to the user's country. For to disable geoIpLookup mode pass the Boolean value 'false' as [isGeoIpLookup]="false".
 
+```
+<select-country [isGeoIpLookup]="false"></select-country>
+```
 
 ## License
 

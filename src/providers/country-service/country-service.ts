@@ -1993,6 +1993,22 @@ export class CountryServiceProvider {
     });
   }
 
+  getDefaultCountry() {
+    return new Promise(resolve => {
+    var activeCountry: any = {
+      "name": "United States of America",
+      "countryCode": "US",
+      "callingCodes": [
+        "1"
+      ],
+      "numberExample": "(201) 555-0123"
+    };
+
+    let userCountry = {activeFlag: "http://www.geonames.org/flags/x/us.gif", activeCountry: activeCountry};
+      resolve(userCountry);
+    });
+  }
+
   getUserCountry() {
     return this.http.get("https://api.ipdata.co").toPromise().then(data => {
 
