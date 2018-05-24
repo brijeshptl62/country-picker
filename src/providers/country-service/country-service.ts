@@ -2012,7 +2012,7 @@ export class CountryServiceProvider {
         numberPlaceholder = "Mobile Number";
       }
 
-      let userCountry = {activeFlag: activeFlag, activeCountryArray: activeCountryArray, numberPlaceholder: numberPlaceholder};
+      let userCountry = {activeFlag: activeFlag, activeCountry: activeCountry, numberPlaceholder: numberPlaceholder};
       return userCountry
     }).catch(
       (err) => {

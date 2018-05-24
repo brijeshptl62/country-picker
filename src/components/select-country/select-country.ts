@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {HttpClient} from "@angular/common/http";
 import {CountryServiceProvider} from "../../providers/country-service/country-service";
@@ -160,8 +160,10 @@ const HTML_TEMPLATE = `
 })
 export class SelectCountryComponent {
 
-  @Output() sendNumber = new EventEmitter();
-  @Output() sendCountry = new EventEmitter();
+  @Input('isPlaceholder') isPlaceholder;
+
+  @Output() onSelectNumber = new EventEmitter();
+  @Output() onSelectCountry = new EventEmitter();
   isListOpen: boolean;
   allCountries: any;
   activeFlag: string;
@@ -173,13 +175,23 @@ export class SelectCountryComponent {
 
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
     this.isListOpen = false;
+  }
+
+  ngAfterViewInit() {
+
     var self: any = this;
 
     this.countryService.getUserCountry().then(
       (success) => {
         self.activeFlag = success.activeFlag;
         this.activeCountry = success.activeCountry;
-        this.numberPlaceholder = success.numberPlaceholder;
+
+        if ((success.numberPlaceholder) && this.isPlaceholder != false) {
+          this.numberPlaceholder = success.numberPlaceholder;
+        } else {
+          this.numberPlaceholder = "Mobile Number";
+        }
+
       })
       .catch(
         (err) => {
@@ -217,13 +229,15 @@ export class SelectCountryComponent {
       self.selectedCountry = selectedCountry;
       if (self.selectedCountry.length > 0) {
         var targetLi: any = document.getElementById(self.selectedCountry);
-        targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+        if (targetLi) {
+          targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+        }
       }
     });
 
     if (this.activeFlag && this.activeCountry) {
       setTimeout(() => {
-        this.scrollTo(this.activeCountry.flag);
+        this.scrollTo("flag-icon-" + this.activeCountry.countryCode.toLowerCase());
       }, 100);
     }
 
@@ -231,10 +245,11 @@ export class SelectCountryComponent {
 
   scrollTo(elementId: string) {
     var targetLi: any = document.getElementById(elementId);
-    targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
-    targetLi.style.backgroundColor = "#eeee";
+    if (targetLi) {
+      targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+      targetLi.style.backgroundColor = "#eeee";
+    }
   }
-
 
   validationCheckFn(mobile: any) {
     if (mobile && (/^\d+$/.test(mobile))) {
@@ -242,23 +257,23 @@ export class SelectCountryComponent {
       const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
 
       if (phoneUtil.isValidNumber(number)) {
-        let mobileObj = {mobile: mobile, isValid: "valid"};
-        this.sendNumber.emit(mobileObj)
+        let mobileObj = {mobile: mobile, isValid: "true"};
+        this.onSelectNumber.emit(mobileObj)
       } else {
-        let mobileObj = {mobile: mobile, isValid: "invalid"};
-        this.sendNumber.emit(mobileObj)
+        let mobileObj = {mobile: mobile, isValid: "false"};
+        this.onSelectNumber.emit(mobileObj)
       }
     } else {
-      let mobileObj = {mobile: mobile, isValid: "invalid"};
-      this.sendNumber.emit(mobileObj)
+      let mobileObj = {mobile: mobile, isValid: "false"};
+      this.onSelectNumber.emit(mobileObj)
     }
   }
 
   chooseCountry(country) {
-    this.sendCountry.emit(country);
+    this.onSelectCountry.emit(country);
     this.isListOpen = false;
     this.activeCountry = country;
-    if (this.activeCountry.numberExample) {
+    if (this.activeCountry.numberExample && this.isPlaceholder != false) {
       this.numberPlaceholder = this.activeCountry.numberExample;
     } else {
       this.numberPlaceholder = "Mobile Number";
