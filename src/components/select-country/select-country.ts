@@ -239,7 +239,6 @@ export class SelectCountryComponent {
       const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
       const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
 
-      console.log(phoneUtil.isValidNumber(number))
       if (phoneUtil.isValidNumber(number)) {
         let mobileObj = {mobile: mobile, isValid: "true"};
         this.onSelectNumber.emit(mobileObj)

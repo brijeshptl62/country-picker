@@ -1,4 +1,4 @@
-import { Component , Output, EventEmitter, Input} from '@angular/core';
+import {Component, Output, EventEmitter, Input} from '@angular/core';
 import {CountryServiceProvider} from "../../providers/country-service/country-service";
 
 /**
@@ -68,48 +68,27 @@ const CSS_STYLE = `
 
 @Component({
   selector: 'flag-dropdown',
-  // templateUrl: 'flag-dropdown.html',
   template: HTML_TEMPLATE,
   styles: [CSS_STYLE]
 })
 export class FlagDropdownComponent {
 
   allCountries: any;
+  selectedCountry: any;
 
   @Input('activeCountryData') activeCountryData;
 
-   @Output() onSelectOption = new EventEmitter();
+  @Output() onSelectOption = new EventEmitter();
 
   constructor(public countryService: CountryServiceProvider) {
   }
 
   ngAfterViewInit() {
-    var self: any = this;
 
-    this.countryService.getAllCountry().then(
-      (success) => {
-        self.allCountries = success;
-      }).catch(
-      (err) => {
-        console.log(err);
-      });
+    this.getCountry();
 
-    document.addEventListener("keydown", function (zEvent) {
-
-      var selectedCountry: any = [];
-      for (var x in self.allCountries) {
-        if ((((self.allCountries[x].name).substring(0, 1)) == (zEvent.key).toUpperCase())) {
-          selectedCountry.push(self.allCountries[x].flag);
-          break
-        }
-      }
-      self.selectedCountry = selectedCountry;
-      if (self.selectedCountry.length > 0) {
-        var targetLi: any = document.getElementById(self.selectedCountry);
-        if (targetLi) {
-          targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
-        }
-      }
+    document.addEventListener("keydown", (zEvent) => {
+      this.getCountryByKetdown(zEvent);
     });
 
     if (this.activeCountryData.activeFlag && this.activeCountryData.activeCountry) {
@@ -117,6 +96,34 @@ export class FlagDropdownComponent {
         this.scrollTo("flag-icon-" + this.activeCountryData.activeCountry.countryCode.toLowerCase());
       }, 100);
     }
+  }
+
+  getCountryByKetdown(zEvent: any) {
+    console.log(this.allCountries)
+    var selectedCountry: any = [];
+    for (var x in this.allCountries) {
+      if ((((this.allCountries[x].name).substring(0, 1)) == (zEvent.key).toUpperCase())) {
+        selectedCountry.push(this.allCountries[x].flag);
+        break
+      }
+    }
+    this.selectedCountry = selectedCountry;
+    if (this.selectedCountry.length > 0) {
+      var targetLi: any = document.getElementById(this.selectedCountry);
+      if (targetLi) {
+        targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
+      }
+    }
+  }
+
+  getCountry() {
+    this.countryService.getAllCountry().then(
+      (success) => {
+        this.allCountries = success;
+      }).catch(
+      (err) => {
+        console.log(err);
+      });
   }
 
   scrollTo(elementId: string) {
@@ -128,7 +135,7 @@ export class FlagDropdownComponent {
   }
 
   chooseCountry(country) {
-     this.onSelectOption.emit(country);
+    this.onSelectOption.emit(country);
   }
 
 }
