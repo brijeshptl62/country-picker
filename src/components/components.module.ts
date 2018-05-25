@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { SelectCountryComponent } from './select-country/select-country';
+import { FlagDropdownComponent } from './flag-dropdown/flag-dropdown';
 @NgModule({
-	declarations: [SelectCountryComponent],
+	declarations: [SelectCountryComponent,
+    FlagDropdownComponent],
 	imports: [],
-	exports: [SelectCountryComponent]
+	exports: [SelectCountryComponent,
+    FlagDropdownComponent]
 })
 export class ComponentsModule {}

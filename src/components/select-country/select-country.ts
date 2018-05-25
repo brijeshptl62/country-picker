@@ -122,14 +122,7 @@ const CSS_STYLE = `
 `;
 
 const HTML_TEMPLATE = `
-<div class="flag-main-div" *ngIf="isListOpen">
-    <ul class="country-list">
-      <li class="country" *ngFor="let c of allCountries" #{{c.flag}} id="{{c.flag}}" (click)="chooseCountry(c)">
-        <img [src]="c.flagImg" class="flag-scroll-img"><span class="country-span">{{c.name}}</span><span
-        class="dial-code">{{c.dialCode}}</span>
-      </li>
-    </ul>
-  </div>
+  <flag-dropdown (onSelectOption)="chooseCountry($event)" *ngIf="isListOpen" [activeCountryData]="activeCountryData"></flag-dropdown>
 
     <!--main div-->
     <div class="full-width input-block" padding id="mainDivId">
@@ -154,7 +147,6 @@ const HTML_TEMPLATE = `
 
 @Component({
   selector: 'select-country',
-  // templateUrl: 'select-country.html',
   template: HTML_TEMPLATE,
   styles: [CSS_STYLE]
 })
@@ -170,8 +162,8 @@ export class SelectCountryComponent {
   activeFlag: string;
   activeCountry: any;
   mobile: string;
-  selectedCountry: any = [];
   numberPlaceholder: any;
+  activeCountryData: any;
 
 
   constructor(public navCtrl: NavController, public http: HttpClient, public countryService: CountryServiceProvider) {
@@ -203,10 +195,10 @@ export class SelectCountryComponent {
           }
 
         }).catch(
-          (err) => {
-            console.log(err);
-            self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-          });
+        (err) => {
+          console.log(err);
+          self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
+        });
     }
 
     if (!this.activeFlag) {
@@ -231,31 +223,7 @@ export class SelectCountryComponent {
     this.isListOpen = true;
     this.mobile = null;
 
-    var self: any = this;
-    document.addEventListener("keydown", function (zEvent) {
-
-      var selectedCountry: any = [];
-      for (var x in self.allCountries) {
-        if ((((self.allCountries[x].name).substring(0, 1)) == (zEvent.key).toUpperCase())) {
-          selectedCountry.push(self.allCountries[x].flag);
-          break
-        }
-      }
-      self.selectedCountry = selectedCountry;
-      if (self.selectedCountry.length > 0) {
-        var targetLi: any = document.getElementById(self.selectedCountry);
-        if (targetLi) {
-          targetLi.scrollIntoView(((targetLi.offsetTop) / 4) - 50);
-        }
-      }
-    });
-
-    if (this.activeFlag && this.activeCountry) {
-      setTimeout(() => {
-        this.scrollTo("flag-icon-" + this.activeCountry.countryCode.toLowerCase());
-      }, 100);
-    }
-
+    this.activeCountryData = {activeFlag: this.activeFlag, activeCountry: this.activeCountry};
   }
 
   scrollTo(elementId: string) {
@@ -271,6 +239,7 @@ export class SelectCountryComponent {
       const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
       const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
 
+      console.log(phoneUtil.isValidNumber(number))
       if (phoneUtil.isValidNumber(number)) {
         let mobileObj = {mobile: mobile, isValid: "true"};
         this.onSelectNumber.emit(mobileObj)
