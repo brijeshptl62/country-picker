@@ -22,7 +22,7 @@ import {ComponentsModule} from "../components/components.module";
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule,
+    IonicModule.forRoot(MyApp),
     ComponentsModule
   ],
   bootstrap: [IonicApp],
