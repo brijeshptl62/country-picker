@@ -19,38 +19,6 @@ const CSS_STYLE = `
     position: relative;
   }
 
-  .flag-main-div {
-    top: 30px;
-    bottom: 30px;
-    left: 30px;
-    right: 30px;
-    position: fixed;
-    width: auto;
-    z-index: 2;
-  }
-
-  .country-list {
-    max-height: 100%;
-    width: 100%;
-    position: absolute;
-    z-index: 2;
-    list-style: none;
-    text-align: left;
-    padding: 0;
-    margin: 0 0 0 -1px;
-    -webkit-box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
-    background-color: white;
-    border: 1px solid #CCC;
-    white-space: normal;
-    overflow-y: scroll;
-  }
-
-  .country {
-    padding: 10px 10px;
-    line-height: 1.5em;
-  }
-
   .flag-div {
     width: 19%;
     height: 40px;
@@ -86,34 +54,9 @@ const CSS_STYLE = `
     border-right: 4px solid transparent;
     border-top: 6px solid #555;
   }
-
-  .country-span {
-    padding: 0 5px;
-  }
-
-  .btn-login {
-    color: white;
-    border-color: white;
-    background-color: #006DCC;
-  }
-
-  .dial-code {
-    opacity: 0.5;
-  }
-
-  .error-div
-  {
-    font-weight: bold;
-    font-size: 1.5rem;
-    padding-top: 10px;
-  }
-
-  #error-msg {
-    color: #FF3D00;
-  }
-
-  #valid-msg {
-    color: #00C900;
+  
+  .padding-9 {
+    padding: 10px;
   }
 
   .margin-0 {
@@ -171,58 +114,67 @@ export class SelectCountryComponent {
   }
 
   ngAfterViewInit() {
+    this.getAllCountrys();
 
-    var self: any = this;
+    if (this.isGeoIpLookup != false) {
+      this.getUserCurrentCountry();
+    }
 
+    if (!this.activeFlag) {
+      this.getUserDefaultCountry();
+    }
+  }
+
+  getAllCountrys() {
     this.countryService.getAllCountry().then(
       (success) => {
-        self.allCountries = success;
+        this.allCountries = success;
       }).catch(
       (err) => {
         console.log(err);
       });
+  }
 
-    if (this.isGeoIpLookup != false) {
-      this.countryService.getUserCountry().then(
-        (success) => {
-          self.activeFlag = success.activeFlag;
-          this.activeCountry = success.activeCountry;
+  getUserCurrentCountry() {
+    this.countryService.getUserCountry().then(
+      (success) => {
+        this.activeFlag = success.activeFlag;
+        this.activeCountry = success.activeCountry;
 
-          if ((success.numberPlaceholder) && this.isPlaceholder != false) {
-            this.numberPlaceholder = success.numberPlaceholder;
-          } else {
-            this.numberPlaceholder = "Mobile Number";
-          }
+        if ((success.numberPlaceholder) && this.isPlaceholder != false) {
+          this.numberPlaceholder = success.numberPlaceholder;
+        } else {
+          this.numberPlaceholder = "Mobile Number";
+        }
 
-        }).catch(
-        (err) => {
-          console.log(err);
-          self.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-        });
-    }
+      }).catch(
+      (err) => {
+        console.log(err);
+        this.activeFlag = CountryServiceProvider.defaultCountry;
+      });
+  }
 
-    if (!this.activeFlag) {
-      this.countryService.getDefaultCountry().then(
-        (success) => {
-          this.activeFlag = success.activeFlag;
-          this.activeCountry = success.activeCountry;
-          if ((this.activeCountry.numberExample) && this.isPlaceholder != false) {
-            this.numberPlaceholder = this.activeCountry.numberExample;
-          } else {
-            this.numberPlaceholder = "Mobile Number";
-          }
-        }).catch(
-        (err) => {
-          console.log(err);
-          this.activeFlag = 'http://www.geonames.org/flags/x/us.gif';
-        });
-    }
+  getUserDefaultCountry() {
+    this.countryService.getDefaultCountry().then(
+      (success) => {
+        var activeCountry: any = success;
+        this.activeFlag = activeCountry.activeFlag;
+        this.activeCountry = activeCountry.activeCountry;
+        if ((this.activeCountry.numberExample) && this.isPlaceholder != false) {
+          this.numberPlaceholder = this.activeCountry.numberExample;
+        } else {
+          this.numberPlaceholder = "Mobile Number";
+        }
+      }).catch(
+      (err) => {
+        console.log(err);
+        this.activeFlag = CountryServiceProvider.defaultCountry;
+      });
   }
 
   selectCountry() {
     this.isListOpen = true;
     this.mobile = null;
-
     this.activeCountryData = {activeFlag: this.activeFlag, activeCountry: this.activeCountry};
   }
 

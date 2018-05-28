@@ -99,7 +99,6 @@ export class FlagDropdownComponent {
   }
 
   getCountryByKetdown(zEvent: any) {
-    console.log(this.allCountries)
     var selectedCountry: any = [];
     for (var x in this.allCountries) {
       if ((((this.allCountries[x].name).substring(0, 1)) == (zEvent.key).toUpperCase())) {

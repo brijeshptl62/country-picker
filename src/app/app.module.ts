@@ -9,8 +9,8 @@ import { HomePage } from '../pages/home/home';
 
 import {HttpClientModule} from "@angular/common/http";
 import { CountryServiceProvider } from '../providers/country-service/country-service';
-import {SelectCountryComponent} from "../components/select-country/select-country";
-import {FlagDropdownComponent} from "../components/flag-dropdown/flag-dropdown";
+
+import {ComponentsModule} from "../components/components.module";
 
 
 
@@ -18,13 +18,12 @@ import {FlagDropdownComponent} from "../components/flag-dropdown/flag-dropdown";
   declarations: [
     MyApp,
     HomePage,
-    SelectCountryComponent,
-    FlagDropdownComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

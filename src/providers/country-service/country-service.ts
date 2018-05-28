@@ -1976,6 +1976,8 @@ export class CountryServiceProvider {
     ];
 
 
+  public static defaultCountry = "http://www.geonames.org/flags/x/us.gif";
+
   getAllCountry() {
     return new Promise(resolve => {
      let result = this.allCountries.map(function (obj) {
