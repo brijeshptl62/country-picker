@@ -42,23 +42,17 @@ Develop your module like any other ionic 3 & Angular module. Then, run ```npm ru
 ```
 
 // Import 
-import { CountryServiceProvider ,SelectCountryComponent } from 'country-picker';
+import { CountryServiceProvider ,ComponentsModule } from 'country-picker';
 import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
-  declarations: [
-    ...
-    
-    SelectCountryComponent
-  ],
   imports: [
     ...
     
-    HttpClientModule // Put Http module here
+    HttpClientModule, // Put Http module here
+    ComponentsModule
   ],
-   
-   ...
    
   providers: [
     ...
@@ -73,7 +67,7 @@ import {HttpClientModule} from "@angular/common/http";
 **home.html**
 
 ```
-  <select-country (sendNumber)="getNumber($event)" (sendCountry)="getCountry($event)"></select-country>
+  <select-country (onSelectNumber)="getNumber($event)"  (onSelectCountry)="getCountry($event)"></select-country>
 
 ```
 
@@ -85,8 +79,8 @@ import {HttpClientModule} from "@angular/common/http";
 <select-country (onSelectCountry)="getCountry($event)"></select-country>
 ```
 ```
-  getCountry(selectedCountry: any){
-    console.log(selectedCountry)
+  getCountry(selectedCountryObject: any){
+    console.log(selectedCountryObject)
   }
 ```
 
@@ -95,8 +89,8 @@ import {HttpClientModule} from "@angular/common/http";
 <select-country (onSelectNumber)="getNumber($event)"></select-country>
 ```
 ```
-  getNumber(enteredNumber: any){
-    console.log(enteredNumber.mobile)
+  getNumber(enteredNumberObject: any){
+    console.log(enteredNumberObject.mobile)
   }
 ```
 
@@ -106,8 +100,8 @@ import {HttpClientModule} from "@angular/common/http";
 <select-country (onSelectNumber)="getNumber($event)"></select-country>
 ```
 ```
-  getNumber(enteredNumber: any){
-    console.log(enteredNumber.isValid)
+  getNumber(enteredNumberObject: any){
+    console.log(enteredNumberObject.isValid)
     // isValid is return in boolean form as true | false
   }
 ```

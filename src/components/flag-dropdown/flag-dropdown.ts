@@ -20,7 +20,7 @@ const HTML_TEMPLATE = `
 `;
 
 const CSS_STYLE = `
-.flag-scroll-img {
+  .flag-scroll-img {
     width: 2.2em;
     height: 1.4em;
   }

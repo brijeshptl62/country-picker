@@ -10,7 +10,7 @@ import {CountryServiceProvider} from "../../providers/country-service/country-se
  * Components.
  */
 const CSS_STYLE = `
-.flag-scroll-img {
+  .flag-scroll-img {
     width: 2.2em;
     height: 1.4em;
   }
@@ -22,8 +22,6 @@ const CSS_STYLE = `
   .flag-div {
     width: 19%;
     height: 40px;
-    //border-top-left-radius: 2px;
-    //border-bottom-left-radius: 2px;
     position: absolute;
     background: white;
     border: 1px solid #D2D2D2;
@@ -33,10 +31,8 @@ const CSS_STYLE = `
     margin-left: 20%;
     width: 80%;
     padding-left: 3%;
-    //border-top-right-radius: 2px;
     height: 40px;
-    //border-bottom-right-radius: 2px;
-    //border: none;
+    border: 1px solid #D2D2D2;
   }
 
   .active-flag {
@@ -187,17 +183,25 @@ export class SelectCountryComponent {
   }
 
   validationCheckFn(mobile: any) {
-    if (mobile && (/^\d+$/.test(mobile))) {
-      const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
-      const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
+    if (mobile && (/^\d+$/.test(mobile)) && ((mobile.length) < 18)) {
 
-      if (phoneUtil.isValidNumber(number)) {
-        let mobileObj = {mobile: mobile, isValid: "true"};
-        this.onSelectNumber.emit(mobileObj)
-      } else {
+      try {
+        const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
+        const number = phoneUtil.parseAndKeepRawInput(mobile, this.activeCountry.countryCode);
+
+        if (phoneUtil.isValidNumber(number)) {
+          let mobileObj = {mobile: mobile, isValid: "true"};
+          this.onSelectNumber.emit(mobileObj)
+        } else {
+          let mobileObj = {mobile: mobile, isValid: "false"};
+          this.onSelectNumber.emit(mobileObj)
+        }
+      }
+      catch (error) {
         let mobileObj = {mobile: mobile, isValid: "false"};
         this.onSelectNumber.emit(mobileObj)
       }
+
     } else {
       let mobileObj = {mobile: mobile, isValid: "false"};
       this.onSelectNumber.emit(mobileObj)
