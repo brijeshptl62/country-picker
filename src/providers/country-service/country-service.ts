@@ -1976,7 +1976,7 @@ export class CountryServiceProvider {
     ];
 
 
-  public static defaultCountry = "http://www.geonames.org/flags/x/us.gif";
+  public static defaultCountry = "https://www.geonames.org/flags/x/de.gif";
 
   getAllCountry() {
     return new Promise(resolve => {
@@ -1987,7 +1987,7 @@ export class CountryServiceProvider {
           dialCode: "+" + obj.callingCodes[0],
           flag: "flag-icon-" + obj.countryCode.toLowerCase(),
           numberExample: obj.numberExample,
-          flagImg: "http://www.geonames.org/flags/x/"+ obj.countryCode.toLowerCase() +".gif",
+          flagImg: "https://www.geonames.org/flags/x/"+ obj.countryCode.toLowerCase() +".gif",
 
         }
       });
@@ -1998,15 +1998,15 @@ export class CountryServiceProvider {
   getDefaultCountry() {
     return new Promise(resolve => {
     var activeCountry: any = {
-      "name": "United States of America",
-      "countryCode": "US",
-      "callingCodes": [
-        "1"
+        "name": "Germany",
+        "countryCode": "DE",
+        "callingCodes": [
+      	"49"
       ],
-      "numberExample": "(201) 555-0123"
+    	"numberExample": "01512 3456789"
     };
 
-    let userCountry = {activeFlag: "http://www.geonames.org/flags/x/us.gif", activeCountry: activeCountry};
+    let userCountry = {activeFlag: "https://www.geonames.org/flags/x/us.gif", activeCountry: activeCountry};
       resolve(userCountry);
     });
   }
@@ -2016,7 +2016,7 @@ export class CountryServiceProvider {
 
       var countryResponce: any = data;
       var countryCodes: any = (countryResponce.country_code).toLowerCase();
-      var activeFlag = "http://www.geonames.org/flags/x/" + countryCodes + ".gif";
+      var activeFlag = "https://www.geonames.org/flags/x/" + countryCodes + ".gif";
 
       var activeCountryArray: any;
       activeCountryArray = this.allCountries.filter((obj) => {
@@ -2027,7 +2027,7 @@ export class CountryServiceProvider {
       if (activeCountry.numberExample) {
         numberPlaceholder = activeCountry.numberExample;
       } else {
-        numberPlaceholder = "Mobile Number";
+        numberPlaceholder = "Mobilfunknummer";
       }
 
       let userCountry = {activeFlag: activeFlag, activeCountry: activeCountry, numberPlaceholder: numberPlaceholder};
